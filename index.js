@@ -1,19 +1,24 @@
 import fs from "fs"
-export default class WebpackFileMapPlugin {
+import path from "path"
+export default class WebpackPluginTest {
   apply(complier) {
     complier.plugin("emit", (compilation, cb) => {
-      let out;
+      let out, context;
       const fileMap = {};
+      const assets = compilation.assets;
       compilation.chunks.map((chunk) => {
-        let loc;
-        chunk.blocks.map((block) => {
-          loc = block.loc;
+        let loc, block;
+        chunk.blocks.map((b) => {
+          block = b;
         });
-        if(loc) {
-          fileMap[loc] = chunk.files;
+        if(block) {
+          let filePath;
+
+          loc = block.loc;
+          context = block.parent.context;
+          filePath = path.join(context, loc).replace(process.env.PWD, "");
+          fileMap[filePath] = chunk.files;
         }
-        // console.log(loc);
-        // console.log(chunk.files);
       });
       out = JSON.stringify(fileMap);
       assets["fileMap.json"] = {

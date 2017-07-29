@@ -1,0 +1,14 @@
+{
+  "name": "webpack-file-map-plugin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  },
+  "keywords": [
+    "webpack",
+    "fileMap"
+  ],
+  "author": "lnyi",
+  "license": "ISC"
+}

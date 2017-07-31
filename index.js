@@ -21,14 +21,7 @@ export default class WebpackPluginTest {
         }
       });
       out = JSON.stringify(fileMap);
-      assets["fileMap.json"] = {
-        source() {
-          return out;
-        },
-        size() {
-          return out.length;
-        }
-      }
+      fs.writeFile(path.join(process.env.PWD, "static/dist/fileMap.json"), out);
       cb();
     })
   }

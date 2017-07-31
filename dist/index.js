@@ -47,14 +47,7 @@ var WebpackPluginTest = function () {
           }
         });
         out = JSON.stringify(fileMap);
-        assets["fileMap.json"] = {
-          source: function source() {
-            return out;
-          },
-          size: function size() {
-            return out.length;
-          }
-        };
+        _fs2.default.writeFile(_path2.default.join(process.env.PWD, "static/dist/fileMap.json"), out);
         cb();
       });
     }

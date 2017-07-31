@@ -3,7 +3,9 @@
   "version": "1.0.1",
   "description": "create webpack source and output file map",
   "main": "dist/index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "babel index.js -o dist/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lnyielea/webpack-file-map-plugin.git"

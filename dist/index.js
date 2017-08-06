@@ -19,35 +19,45 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var WebpackPluginTest = function () {
-  function WebpackPluginTest() {
+  function WebpackPluginTest(options) {
     _classCallCheck(this, WebpackPluginTest);
+
+    this.options = Object.assign({ output: "./fileMap.json" }, options);
   }
 
   _createClass(WebpackPluginTest, [{
     key: "apply",
     value: function apply(complier) {
+      var _this = this;
+
       complier.plugin("emit", function (compilation, cb) {
         var out = void 0,
             context = void 0;
         var fileMap = {};
         var assets = compilation.assets;
+        // console.log(Object.keys(compilation));
         compilation.chunks.map(function (chunk) {
-          var loc = void 0,
-              block = void 0;
-          chunk.blocks.map(function (b) {
-            block = b;
-          });
-          if (block) {
-            var filePath = void 0;
+          if (chunk.name) {
+            fileMap[chunk.name] = chunk.files;
+          } else {
+            var loc = void 0,
+                block = void 0;
+            chunk.blocks.map(function (b) {
+              block = b;
+            });
+            if (block) {
+              var filePath = void 0;
 
-            loc = block.loc;
-            context = block.parent.context;
-            filePath = _path2.default.join(context, loc).replace(process.env.PWD, "");
-            fileMap[filePath] = chunk.files;
+              loc = block.loc;
+              context = block.parent.context;
+              filePath = _path2.default.join(context, loc).replace(process.env.PWD, "");
+              fileMap[filePath] = chunk.files;
+            }
           }
         });
         out = JSON.stringify(fileMap);
-        _fs2.default.writeFile(_path2.default.join(process.env.PWD, "static/dist/fileMap.json"), out);
+        console.log("[fileMap output]", _this.options.output);
+        _fs2.default.writeFile(_this.options.output, out);
         cb();
       });
     }

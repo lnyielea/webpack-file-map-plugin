@@ -56,7 +56,6 @@ var WebpackPluginTest = function () {
           }
         });
         out = JSON.stringify(fileMap);
-        console.log("[fileMap output]", _this.options.output);
         _fs2.default.writeFile(_this.options.output, out);
         cb();
       });

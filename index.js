@@ -30,7 +30,6 @@ export default class WebpackPluginTest {
         }
       });
       out = JSON.stringify(fileMap);
-      console.log("[fileMap output]", this.options.output);
       fs.writeFile(this.options.output, out);
       cb();
     })
